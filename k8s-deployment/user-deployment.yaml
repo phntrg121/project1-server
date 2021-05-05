@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+  labels:
+    app: user-serv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-serv
+  template:
+    metadata:
+      labels:
+        app: user-serv
+    spec:        
+      containers:
+      - name: user_service
+        image: user_service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8088
+        env:
+        - name: PORT
+          valueFrom: 
+            secretKeyRef:
+              name: user-secret
+              key: port
+        - name: MONGODB_URL
+          valueFrom:
+            secretKeyRef:
+              name: user-secret
+              key: mongodb-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-serv
+  type: NodePort
+  ports:
+    - name: user-serv
+      protocol: TCP
+      port: 8088
+      targetPort: 8088
+      nodePort: 30163
