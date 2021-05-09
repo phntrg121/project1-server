@@ -14,18 +14,16 @@ module.exports = {
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
     if(user && bcrypt.compareSync(password, user.hash)) {
-        const response ={
+        return {
             message: 'OK',
             data: user
         }
-        return response
     }
     else{
-        const response ={
+        return {
             message: 'Incorrect email or password',
             data: null
         }
-        return response
     }
     // if (user && bcrypt.compareSync(password, user.hash)) {
     //     return {

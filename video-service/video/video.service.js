@@ -44,7 +44,6 @@ async function getRelatedVideo(tagParam){
     }
     //remove duplicates
     let unique = removeDuplicateObjectFromArray(combine, "_id")
-    console.log(unique)
     return {
         message: "OK",
         data: unique
