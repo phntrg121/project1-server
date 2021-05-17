@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prj1-userserv-deployment
+  labels:
+    app: prj1-userserv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prj1-userserv
+  template:
+    metadata:
+      labels:
+        app: prj1-userserv
+    spec:        
+      containers:
+      - name: prj1-userserv
+        image: prj1-userserv:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8088
+        env:
+        - name: PORT
+          valueFrom: 
+            secretKeyRef:
+              name: prj1-userserv-secret
+              key: port
+        - name: MONGODB_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-userserv-secret
+              key: mongodb-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prj1-userserv-service
+spec:
+  selector:
+    app: prj1-userserv
+  ports:
+    - name: prj1-userserv-service
+      port: 8088
+      targetPort: 8088
+      protocol: TCP

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prj1-gateway-deployment
+  labels:
+    app: prj1-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prj1-gateway
+  template:
+    metadata:
+      labels:
+        app: prj1-gateway
+    spec:        
+      containers:
+      - name: prj1-gateway
+        image: prj1-gateway:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8081
+        env:
+        - name: PORT
+          valueFrom: 
+            secretKeyRef:
+              name: prj1-gateway-secret
+              key: port
+        - name: USERSERV_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-gateway-secret
+              key: userserv-url
+        - name: VIDEOSERV_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-gateway-secret
+              key: videoserv-url
+        - name: COMMENTSERV_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-gateway-secret
+              key: commentserv-url
+        - name: SUBSCRIPTIONSERV_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-gateway-secret
+              key: subscriptionserv-url            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prj1-gateway-service
+spec:
+  selector:
+    app: prj1-gateway
+  type: LoadBalancer
+  ports:
+    - name: prj1-gateway-service
+      port: 8081
+      targetPort: 8081  
+      protocol: TCP

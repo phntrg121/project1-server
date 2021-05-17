@@ -51,11 +51,19 @@ async function getRelatedVideo(tagParam){
 }
 
 async function getFirstPage(page) {
-    return await Video.find().limit(20);
+    const videos = await Video.find().limit(20)
+    return {
+        message: "OK",
+        data: videos
+    }
 }
 
 async function getPage(page) {
-    return await Video.find().limit(20);
+    const videos = await Video.find().limit(20)
+    return {
+        message: "OK",
+        data: videos
+    }
 }
 
 async function getById(id) {

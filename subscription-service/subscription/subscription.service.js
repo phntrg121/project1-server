@@ -3,8 +3,8 @@ const Subscription = db.Subscription;
 
 module.exports = {
     create,
-    getSub,
-    getSubCount,
+    getSubscriber,
+    getSubscription,
     subscribe,
     check,
 };
@@ -22,18 +22,20 @@ async function create(id) {
     }
 }
 
-async function getSub(id){
-    const sub = await Subscription.findById(id)
+async function getSubscriber(id){
+    const sub = await Subscription.findOne({userId: id})
+    delete sub.subscriptionCount
+    delete sub.subscriptions
     return{
         message:"OK",
         data: sub
     }
 }
 
-async function getSubCount(id){
-    var sub = await Subscription.findOne({userId: id})
+async function getSubscription(id){
+    const sub = await Subscription.findOne({userId: id})
+    delete sub.subscriberCount
     delete sub.subscribers
-    delete sub.subscriptions
     return{
         message:"OK",
         data: sub

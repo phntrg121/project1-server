@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prj1-videoserv-deployment
+  labels:
+    app: prj1-videoserv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prj1-videoserv
+  template:
+    metadata:
+      labels:
+        app: prj1-videoserv
+    spec:        
+      containers:
+      - name: prj1-videoserv
+        image: prj1-videoserv:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8089
+        env:
+        - name: PORT
+          valueFrom: 
+            secretKeyRef:
+              name: prj1-videoserv-secret
+              key: port
+        - name: MONGODB_URL
+          valueFrom:
+            secretKeyRef:
+              name: prj1-videoserv-secret
+              key: mongodb-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prj1-videoserv-service
+spec:
+  selector:
+    app: prj1-videoserv
+  ports:
+    - name: prj1-videoserv-service
+      port: 8089
+      targetPort: 8089
+      protocol: TCP

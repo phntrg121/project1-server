@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { replaceOne } = require('../../subscription-service/subscription/subscription.model');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({

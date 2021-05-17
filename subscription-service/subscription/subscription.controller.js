@@ -4,8 +4,8 @@ const subService = require('./subscription.service');
 
 // routes
 router.post('/create/:id', create);
-router.get('/:id', getSub);
-router.get('/count/:id', getSubCount);
+router.get('/subscribers/:id', getSubscriber);
+router.get('/subscriptions/:id', getSubscription);
 router.post('/subscribe', subscribe);
 router.post('/check', check);
 
@@ -17,14 +17,14 @@ function create(req, res, next) {
     .catch(err => next(err))
 }
 
-function getSub(req, res, next) {
-    subService.getSub(req.params.id)
+function getSubscriber(req, res, next) {
+    subService.getSubscriber(req.params.id)
     .then(sub => res.json(sub))
     .catch(err => next(err))
 }
 
-function getSubCount(req, res, next) {
-    subService.getSubCount(req.params.id)
+function getSubscription(req, res, next) {
+    subService.getSubscription(req.params.id)
     .then(sub => res.json(sub))
     .catch(err => next(err))
 }
