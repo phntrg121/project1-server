@@ -6,6 +6,7 @@ metadata:
     app: prj1-commentserv
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: prj1-commentserv
@@ -22,10 +23,7 @@ spec:
         - containerPort: 8090
         env:
         - name: PORT
-          valueFrom: 
-            secretKeyRef:
-              name: prj1-commentserv-secret
-              key: port
+          value: "8090"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:

@@ -6,6 +6,7 @@ metadata:
     app: prj1-subscriptionserv
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: prj1-subscriptionserv
@@ -22,10 +23,7 @@ spec:
         - containerPort: 8091
         env:
         - name: PORT
-          valueFrom: 
-            secretKeyRef:
-              name: prj1-subscriptionserv-secret
-              key: port
+          value: "8091"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:

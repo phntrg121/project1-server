@@ -3,7 +3,6 @@ const router = express.Router();
 const videoService = require('./video.service');
 
 // routes
-router.post('/upload', upload);
 router.post('/related', getRelatedVideo);
 router.get('/', getFirstPage);
 router.get('/p=:page', getPage);
@@ -12,12 +11,6 @@ router.put('/:id', update);
 router.delete('/:id', remove);
 
 module.exports = router;
-
-function upload(req, res, next){
-    videoService.upload(req.body)
-    .then(video => res.json(video))
-    .catch(err => next(err))
-}
 
 function getRelatedVideo(req, res, next){
     videoService.getRelatedVideo(req.body)

@@ -2,7 +2,6 @@ const db = require('../db');
 const Video = db.Video;
 
 module.exports = {
-    upload,
     getPage,
     getFirstPage,
     getById,
@@ -12,18 +11,6 @@ module.exports = {
 };
 
 
-async function upload(videoParam) {
-    const video = new Video(videoParam);
-
-    // save video
-    await video.save();
-
-    const newVideo = await Video.findOne(video)
-    return {
-        message: 'OK',
-        data: newVideo
-    }
-}
 function removeDuplicateObjectFromArray(array, key) {
     var check = {};
     var res = [];

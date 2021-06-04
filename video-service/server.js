@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/api/v1', require('./video/video.controller'));
+app.use('/api/v1', require('./upload/upload.controller'));
 
 const port = process.env.PORT || 3000;
 

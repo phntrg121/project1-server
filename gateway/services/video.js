@@ -4,6 +4,7 @@ const axios = require('axios')
 
 // routes
 router.post('/upload', upload);
+router.get('/uploads/:id', getUpload);
 router.post('/related', getRelatedVideo);
 router.get('/', getFirstPage);
 router.get('/p=:page', getPage);
@@ -17,6 +18,14 @@ function upload(req, res, next){
     axios.post(process.env.VIDEOSERV_URL + '/upload', req.body)
     .then(video=>{
         res.json(video.data)
+    })
+    .catch(err => next(err))    
+}
+
+function getUpload(req, res, next){
+    axios.get(process.env.VIDEOSERV_URL + '/uploads/' + req.params.id)
+    .then(upload=>{
+        res.json(upload.data)
     })
     .catch(err => next(err))
 }
