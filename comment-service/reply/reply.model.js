@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    videoId: { type: String, required: true },
+    commentId: { type: String, required: true },
     postedDate: { type: Date, default: Date.now },
     from: { type: String, required: true },
     content: { type: String, required: true},
     likes: { type: Number, default: 0},
-    replyCount: { type: Number, default: 0},
+    parent: { type: String, default: ''},
+    childs: { type: {String}}
 });
 
 schema.set('toJSON', {
@@ -18,4 +19,4 @@ schema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Comment', schema);
+module.exports = mongoose.model('Reply', schema);

@@ -4,8 +4,8 @@ const uploadService = require('./upload.service');
 
 // routes
 
-router.post('/upload', upload);
-router.get('/uploads/:id', getUploads);
+router.post('', upload);
+router.get('/channel=:id', getUploads);
 
 module.exports = router;
 

@@ -8,8 +8,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/v1', require('./video/video.controller'));
-app.use('/api/v1', require('./upload/upload.controller'));
+app.use('/api/v1/comment', require('./comment/comment.controller'));
+app.use('/api/v1/reply', require('./reply/reply.controller'));
 
 const port = process.env.PORT || 3000;
 

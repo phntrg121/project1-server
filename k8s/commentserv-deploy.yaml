@@ -27,8 +27,8 @@ spec:
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
-              name: prj1-commentserv-secret
-              key: mongodb-url
+              name: prj1-database-secret
+              key: commentserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service

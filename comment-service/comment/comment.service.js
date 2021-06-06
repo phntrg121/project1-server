@@ -3,7 +3,7 @@ const Comment = db.Comment;
 
 module.exports = {
     post,
-    getVideoComment,
+    getVideoComments,
     getById,
     update,
     remove
@@ -23,7 +23,7 @@ async function post(commentParam) {
     }
 }
 
-async function getVideoComment(videoId) {
+async function getVideoComments(videoId) {
     const comments = await Comment.find({videoId: videoId}).limit(20);
     return {
         message: "OK",

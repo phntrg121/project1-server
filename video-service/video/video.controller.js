@@ -4,8 +4,8 @@ const videoService = require('./video.service');
 
 // routes
 router.post('/related', getRelatedVideo);
-router.get('/', getFirstPage);
-router.get('/p=:page', getPage);
+router.get('', getFirstPage);
+router.get('/page=:page', getPage);
 router.get('/:id', getById);
 router.put('/:id', update);
 router.delete('/:id', remove);

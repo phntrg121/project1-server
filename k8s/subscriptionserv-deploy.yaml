@@ -27,8 +27,8 @@ spec:
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
-              name: prj1-subscriptionserv-secret
-              key: mongodb-url             
+              name: prj1-database-secret
+              key: subscriptionserv-mongodb-url             
 ---
 apiVersion: v1
 kind: Service

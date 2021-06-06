@@ -25,25 +25,13 @@ spec:
         - name: PORT
           value: "8081"
         - name: USERSERV_URL
-          valueFrom:
-            secretKeyRef:
-              name: prj1-gateway-secret
-              key: userserv-url
+          value: "http://prj1-userserv-service.default.svc.cluster.local:8088/api/v1"
         - name: VIDEOSERV_URL
-          valueFrom:
-            secretKeyRef:
-              name: prj1-gateway-secret
-              key: videoserv-url
+          value: "http://prj1-videoserv-service.default.svc.cluster.local:8089/api/v1"
         - name: COMMENTSERV_URL
-          valueFrom:
-            secretKeyRef:
-              name: prj1-gateway-secret
-              key: commentserv-url
+          value: "http://prj1-commentserv-service.default.svc.cluster.local:8090/api/v1"
         - name: SUBSCRIPTIONSERV_URL
-          valueFrom:
-            secretKeyRef:
-              name: prj1-gateway-secret
-              key: subscriptionserv-url            
+          value: "http://prj1-subscriptionserv-service.default.svc.cluster.local:8091/api/v1"           
 ---
 apiVersion: v1
 kind: Service

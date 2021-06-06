@@ -3,45 +3,91 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/post', post);
-router.get('/v=:vId', getVideoComment);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.delete('/:id', remove);
+router.post('/comment/post', postComment);
+router.get('/comment/video=:id', getVideoComments);
+router.get('/comment/:id', getCommentById);
+router.put('/comment/:id', updateComment);
+router.delete('/comment/:id', removeComment);
+
+router.post('/reply/post', postReply);
+router.get('/reply/comment=:id', getCommentReplies);
+router.get('/reply/:id', getReplyById);
+router.put('/reply/:id', updateReply);
+router.delete('/reply/:id', removeReply);
 
 module.exports = router;
 
-function post(req, res, next){
-    axios.post(process.env.COMMENTSERV_URL + '/post', req.body)
+//Comment
+
+function postComment(req, res, next){
+    axios.post(process.env.COMMENTSERV_URL + '/comment/post', req.body)
     .then(comment=>{
         res.json(comment.data)
     })
     .catch(err => next(err))
 }
 
-function getVideoComment(req, res, next) {
-    axios.get(process.env.COMMENTSERV_URL + '/v=' + req.params.vId)
+function getVideoComments(req, res, next) {
+    axios.get(process.env.COMMENTSERV_URL + '/comment/video=' + req.params.id)
     .then(comment=>{
         res.json(comment.data)
     })
     .catch(err => next(err))
 }
 
-function getById(req, res, next) {
-    axios.get(process.env.COMMENTSERV_URL + '/' + req.params.id)
+function getCommentById(req, res, next) {
+    axios.get(process.env.COMMENTSERV_URL + '/comment/' + req.params.id)
     .then(comment=>{
         res.json(comment.data)
     })
     .catch(err => next(err))
 }
 
-function update(req, res, next) {
+function updateComment(req, res, next) {
     commentService.update(req.params.id, req.body)
     .then(cmt => res.json(cmt))
     .catch(err => next(err))
 }
 
-function remove(req, res, next) {
+function removeComment(req, res, next) {
+    commentService.remove(req.params.id)
+    .then(cmt => res.json(cmt))
+    .catch(err => next(err))
+}
+
+// Reply
+
+function postReply(req, res, next){
+    axios.post(process.env.COMMENTSERV_URL + '/reply/post', req.body)
+    .then(comment=>{
+        res.json(comment.data)
+    })
+    .catch(err => next(err))
+}
+
+function getCommentReplies(req, res, next) {
+    axios.get(process.env.COMMENTSERV_URL + '/reply/comment=' + req.params.id)
+    .then(comment=>{
+        res.json(comment.data)
+    })
+    .catch(err => next(err))
+}
+
+function getReplyById(req, res, next) {
+    axios.get(process.env.COMMENTSERV_URL + '/reply/' + req.params.id)
+    .then(comment=>{
+        res.json(comment.data)
+    })
+    .catch(err => next(err))
+}
+
+function updateReply(req, res, next) {
+    commentService.update(req.params.id, req.body)
+    .then(cmt => res.json(cmt))
+    .catch(err => next(err))
+}
+
+function removeReply(req, res, next) {
     commentService.remove(req.params.id)
     .then(cmt => res.json(cmt))
     .catch(err => next(err))
