@@ -8,7 +8,7 @@ const schema = new Schema({
     content: { type: String, required: true},
     likes: { type: Number, default: 0},
     parent: { type: String, default: ''},
-    childs: { type: {String}}
+    childs: { type: {String}, default: []}
 });
 
 schema.set('toJSON', {

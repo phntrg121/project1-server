@@ -13,7 +13,7 @@ async function upload(videoParam) {
     // save video
     await video.save();
 
-    const newVideo = await Video.findOne(video)
+    const newVideo = await Video.findOne({_id: video._id})
 
     await addUpload({userId: videoParam.uploaderId, videoId: newVideo._id})
 

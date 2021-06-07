@@ -16,7 +16,7 @@ async function post(commentParam) {
     // save comment
     await comment.save();
 
-    const newComment = await Comment.findOne(comment)
+    const newComment = await Comment.findOne({_id: comment._id})
     return {
         message: 'OK',
         data: newComment

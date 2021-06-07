@@ -16,7 +16,7 @@ async function post(replyParam) {
     // save reply
     await reply.save();
 
-    const newReply = await Reply.findOne(reply)
+    const newReply = await Reply.findOne({_id: reply._id})
     return {
         message: 'OK',
         data: newReply
