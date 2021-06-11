@@ -3,3 +3,5 @@
 **/.env
 **/.dockerignore
 **/docker-compose.*
+
+*/*-secret.yaml
