@@ -2,69 +2,45 @@ const db = require('../db');
 const Playlist = db.Playlist;
 
 module.exports = {
-    getPage,
-    getFirstPage,
+    create,
     getById,
-    getRelatedVideo,
+    getAllFrom,
     update,
     remove
 };
 
+async function create(param){
+    const list = new Playlist(param);
+    // save user
+    await list.save();
 
-function removeDuplicateObjectFromArray(array, key) {
-    var check = {};
-    var res = [];
-    array.forEach(element => {
-        if(!check[element[key]]) {
-            check[element[key]] = true;
-            res.push(element);
-        }
-    });
-    return res;
-}
-
-async function getRelatedVideo(tagParam){
-    let combine = []
-    for (let i = 0; i < tagParam.tags.length; i++){
-        let videos = await Playlist.find({ _id: {$ne: tagParam.videoId}, tags: tagParam.tags[i]}).limit(5)
-        combine = combine.concat(videos)
-    }
-    //remove duplicates
-    let unique = removeDuplicateObjectFromArray(combine, "_id")
+    const newList = await Playlist.findById(list._id);
     return {
-        message: "OK",
-        data: unique
-    }
-}
-
-async function getFirstPage(page) {
-    const videos = await Playlist.find().limit(20)
-    return {
-        message: "OK",
-        data: videos
-    }
-}
-
-async function getPage(page) {
-    const videos = await Playlist.find().limit(20)
-    return {
-        message: "OK",
-        data: videos
+        message: 'OK',
+        data: newList
     }
 }
 
 async function getById(id) {
-    const video = await Playlist.findById(id);
-    return{
-        message: video? "OK": "Video not found",
-        data: video
+    const list = await Playlist.findById(id).limit(20)
+    return {
+        message: "OK",
+        data: list
     }
 }
 
-async function update(id, videoParam) {
+async function getAllFrom(id) {
+    const lists = await Playlist.find({creator: id}).limit(20)
+    return {
+        message: "OK",
+        data: lists
+    }
+}
+
+async function update(id, param) {
     const video = await Playlist.findById(id);
 
-    Object.assign(video, videoParam);
+    Object.assign(video, param);
 
     await video.save();
 }

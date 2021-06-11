@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    title: { type: String, required: true },
-    thumbnail: { type: String, required: true },
-    uploadedDate: { type: Date, default: Date.now },
-    videoURL: { type: String, required: true },
-    description: { type: String, default: "No description"},
-    uploaderId: { type: String, required: true },
-    views: { type: Number, default: 0},
-    likes: { type: Number, default: 0},
-    tags: { type: [String], default: []}
+    name: { type: String, required: true },
+    cover: { type: String, default: ""},
+    latestUpdate: { type: Date, default: Date.now },
+    creator: { type: String, required: true },
+    videos: { type: [String], default: [] },
+    videoCount: { type: Number, default: 0 }
 });
 
 schema.set('toJSON', {
@@ -21,4 +18,4 @@ schema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Video', schema);
+module.exports = mongoose.model('Playlist', schema);
