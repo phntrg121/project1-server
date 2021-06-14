@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/api/v1/playlist', require('./playlist/playlist.controller'));
+app.use('/api/v1/watchlater', require('./watchlater/watchlater.controller'));
 
 const port = process.env.PORT || 3000;
 

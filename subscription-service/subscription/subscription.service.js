@@ -9,9 +9,9 @@ module.exports = {
     check,
 };
 
-async function create(id) {
+async function create(param) {
 
-    const sub = new Subscription({ userId: id});
+    const sub = new Subscription({ userId: param.userId});
 
     await sub.save();
 
@@ -42,17 +42,17 @@ async function getSubscription(id){
     }
 }
 
-async function subscribe(subParam) {
-    const sub = await Subscription.findOne({userId: subParam.userId, subscriptions: subParam.otherId})
+async function subscribe(param) {
+    const sub = await Subscription.findOne({userId: param.userId, subscriptions: param.otherId})
     
     if(!sub){        
         await Subscription.findOneAndUpdate(
-            { userId: subParam.userId },
-            { $inc: { subscriptionCount : 1 }, $push: { subscriptions: subParam.otherId } }
+            { userId: param.userId },
+            { $inc: { subscriptionCount : 1 }, $push: { subscriptions: param.otherId } }
         );
         await Subscription.findOneAndUpdate(
-            { userId: subParam.otherId },
-            { $inc: { subscriberCount : 1 }, $push: { subscribers: subParam.userId } }
+            { userId: param.otherId },
+            { $inc: { subscriberCount : 1 }, $push: { subscribers: param.userId } }
         );
 
         return {
@@ -62,12 +62,12 @@ async function subscribe(subParam) {
     }
     else{
         await Subscription.findOneAndUpdate(
-            { userId: subParam.userId },
-            { $inc: { subscriptionCount : -1 }, $pull: { subscriptions: subParam.otherId } }
+            { userId: param.userId },
+            { $inc: { subscriptionCount : -1 }, $pull: { subscriptions: param.otherId } }
         );    
         await Subscription.findOneAndUpdate(
-            { userId: subParam.otherId },
-            { $inc: { subscriberCount : -1 }, $pull: { subscribers: subParam.userId } }
+            { userId: param.otherId },
+            { $inc: { subscriberCount : -1 }, $pull: { subscribers: param.userId } }
         );
 
         return {
@@ -77,8 +77,8 @@ async function subscribe(subParam) {
     }
 }
 
-async function check(subParam) {
-    const sub = await Subscription.findOne({userId: subParam.userId, subscriptions: subParam.otherId})
+async function check(param) {
+    const sub = await Subscription.findOne({userId: param.userId, subscriptions: param.otherId})
     return {
         message: "OK",
         data: sub? true : false

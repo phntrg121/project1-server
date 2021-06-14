@@ -5,4 +5,5 @@ mongoose.Promise = global.Promise;
 
 module.exports = {
     Playlist: require('./playlist/playlist.model'),
+    Watchlater: require('./watchlater/watchlater.model'),
 };

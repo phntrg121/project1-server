@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/v1', require('./subscription/subscription.controller'));
+app.use('/api/v1/subscription', require('./subscription/subscription.controller'));
 
 const port = process.env.PORT || 3000;
 

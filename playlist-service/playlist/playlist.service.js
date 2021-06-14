@@ -10,7 +10,7 @@ module.exports = {
 };
 
 async function create(param){
-    const list = new Playlist(param);
+    const list = new Playlist({creator: param.userId, name: param.name});
     // save user
     await list.save();
 

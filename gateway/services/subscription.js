@@ -3,16 +3,16 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/create/:id', create);
-router.get('/subscribers/:id', getSubscriber);
-router.get('/subscriptions/:id', getSubscription);
-router.post('/subscribe', subscribe);
-router.post('/check', check);
+router.post('/subscription/create/:id', create);
+router.get('/subscription/subscribers/:id', getSubscriber);
+router.get('/subscription/subscriptions/:id', getSubscription);
+router.post('/subscription/subscribe', subscribe);
+router.post('/subscription/check', check);
 
 module.exports = router;
 
 function create(req, res, next) {
-    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/create/' + req.params.id)
+    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/subscription/create', req.body)
     .then(subscription=>{
         res.json(subscription.data)
     })
@@ -20,7 +20,7 @@ function create(req, res, next) {
 }
 
 function getSubscriber(req, res, next) {
-    axios.get(process.env.SUBSCRIPTIONSERV_URL + '/subscribers/' + req.params.id)
+    axios.get(process.env.SUBSCRIPTIONSERV_URL + '/subscription/subscribers/' + req.params.id)
     .then(subscription=>{
         res.json(subscription.data)
     })
@@ -28,7 +28,7 @@ function getSubscriber(req, res, next) {
 }
 
 function getSubscription(req, res, next) {
-    axios.get(process.env.SUBSCRIPTIONSERV_URL + '/subscriptions/' + req.params.id)
+    axios.get(process.env.SUBSCRIPTIONSERV_URL + '/subscription/subscriptions/' + req.params.id)
     .then(subscription=>{
         res.json(subscription.data)
     })
@@ -36,7 +36,7 @@ function getSubscription(req, res, next) {
 }
 
 function subscribe(req, res, next) {
-    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/subscribe', req.body)
+    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/subscription/subscribe', req.body)
     .then(subscription=>{
         res.json(subscription.data)
     })
@@ -44,7 +44,7 @@ function subscribe(req, res, next) {
 }
 
 function check(req, res, next) {
-    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/check', req.body)
+    axios.post(process.env.SUBSCRIPTIONSERV_URL + '/subscription/check', req.body)
     .then(subscription=>{
         res.json(subscription.data)
     })
