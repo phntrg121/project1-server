@@ -5,3 +5,4 @@
 **/docker-compose.*
 
 */*-secret.yaml
+*/package-lock.json

@@ -3,17 +3,22 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/signin', signIn);
-router.post('/signup', signUp);
-router.get('/', getAll);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.delete('/:id', remove);
+router.post('/user/signin', signIn);
+router.post('/user/signup', signUp);
+router.get('/user/', getAllUser);
+router.get('/user/:id', getUserById);
+router.put('/user/:id', updateUser);
+router.delete('/user/:id', removeUser);
+
+router.post('/channel/create', createChannel);
+router.get('/channel/:id', getChannelByUserId);
+router.put('/channel/:id', updateChannel);
+router.delete('/channel/:id', removeChannel);
 
 module.exports = router;
 
 function signIn(req, res, next) {
-    axios.post(process.env.USERSERV_URL + '/signin', req.body)
+    axios.post(process.env.USERSERV_URL + '/user/signin', req.body)
     .then(user=>{
         res.json(user.data)
     })
@@ -21,36 +26,68 @@ function signIn(req, res, next) {
 }
 
 function signUp(req, res, next) {
-    axios.post(process.env.USERSERV_URL + '/signup', req.body)
+    axios.post(process.env.USERSERV_URL + '/user/signup', req.body)
     .then(user =>{
         res.json(user.data)
     })
     .catch(err => next(err))
 }
 
-function getAll(req, res, next) {
-    axios.get(process.env.USERSERV_URL + '/')
+function getAllUser(req, res, next) {
+    axios.get(process.env.USERSERV_URL + '/user/')
     .then(user=>{
         res.json(user.data)
     })
     .catch(err => next(err))
 }
 
-function getById(req, res, next) {
-    axios.get(process.env.USERSERV_URL + '/' + req.params.id)
+function getUserById(req, res, next) {
+    axios.get(process.env.USERSERV_URL + '/user/' + req.params.id)
     .then(user=>{
         res.json(user.data)
     })
     .catch(err => next(err))
 }
 
-function update(req, res, next) {
+function updateUser(req, res, next) {
     userService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
-function remove(req, res, next) {
+function removeUser(req, res, next) {
+    userService.remove(req.params.id)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+
+
+
+
+function createChannel(req, res, next) {
+    axios.post(process.env.USERSERV_URL + '/channel/create')
+    .then(channel=>{
+        res.json(channel.data)
+    })
+    .catch(err => next(err))
+}
+
+function getChannelByUserId(req, res, next) {
+    axios.get(process.env.USERSERV_URL + '/channel/' + req.params.id)
+    .then(channel=>{
+        res.json(channel.data)
+    })
+    .catch(err => next(err))
+}
+
+function updateChannel(req, res, next) {
+    userService.update(req.params.id, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+function removeChannel(req, res, next) {
     userService.remove(req.params.id)
         .then(() => res.json({}))
         .catch(err => next(err));

@@ -4,6 +4,6 @@ mongoose.connect(process.env.MONGODB_URL, connectionOptions);
 mongoose.Promise = global.Promise;
 
 module.exports = {
-    User: require('./user/user.model'),
-    Channel: require('./channel/channel.model')
+    Playlist: require('./playlist/playlist.model'),
+    Watchlater: require('./watchlater/watchlater.model'),
 };
