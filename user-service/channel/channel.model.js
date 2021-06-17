@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     userId: { type: String, unique: true, required: true },
     banner: { type: String, default: "" },
-    detail: { type: Object, default: null },
+    description: { type: String, default: "" },
+    contact: { type: String, default: "" },
+    links: { type: [Object], default: [] },
     createdDate: { type: Date, default: Date.now },
 });
 

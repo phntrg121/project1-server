@@ -2,10 +2,11 @@ const db = require('../db');
 const Video = db.Video;
 
 module.exports = {
-    getPage,
-    getFirstPage,
+    getVideos,
+    getMore,
     getById,
-    getRelatedVideo,
+    getRelatedVideos,
+    search,
     update,
     remove
 };
@@ -23,10 +24,10 @@ function removeDuplicateObjectFromArray(array, key) {
     return res;
 }
 
-async function getRelatedVideo(tagParam){
+async function getRelatedVideos(params){
     let combine = []
-    for (let i = 0; i < tagParam.tags.length; i++){
-        let videos = await Video.find({ _id: {$ne: tagParam.videoId}, tags: tagParam.tags[i]}).limit(5)
+    for (let i = 0; i < params.tags.length; i++){
+        let videos = await Video.find({ _id: {$ne: params.videoId}, tags: params.tags[i]}).limit(5)
         combine = combine.concat(videos)
     }
     //remove duplicates
@@ -37,7 +38,7 @@ async function getRelatedVideo(tagParam){
     }
 }
 
-async function getFirstPage(page) {
+async function getVideos() {
     const videos = await Video.find().limit(20)
     return {
         message: "OK",
@@ -45,8 +46,8 @@ async function getFirstPage(page) {
     }
 }
 
-async function getPage(page) {
-    const videos = await Video.find().limit(20)
+async function getMore(current) {
+    const videos = await Video.find().limit(20).skip(current)
     return {
         message: "OK",
         data: videos
@@ -58,6 +59,20 @@ async function getById(id) {
     return{
         message: video? "OK": "Video not found",
         data: video
+    }
+}
+
+async function search(query) {
+    const videos = await Video.find({$text:{$search: '\"' + query.query + '\"'}}).limit(60)
+
+    const filtered = videos.filter(video=>{
+        // return video.tags.includes('summer')
+        return true
+    })
+
+    return {
+        message: "OK",
+        data: filtered
     }
 }
 

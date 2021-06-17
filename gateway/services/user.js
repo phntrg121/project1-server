@@ -50,15 +50,19 @@ function getUserById(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-    userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+    axios.put(process.env.USERSERV_URL + '/user/' + req.params.id, req.body)
+    .then(user=>{
+        res.json(user.data)
+    })
+    .catch(err => next(err))
 }
 
 function removeUser(req, res, next) {
-    userService.remove(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+    axios.delete(process.env.USERSERV_URL + '/user/' + req.params.id)
+    .then(user=>{
+        res.json(user.data)
+    })
+    .catch(err => next(err))
 }
 
 
@@ -66,7 +70,7 @@ function removeUser(req, res, next) {
 
 
 function createChannel(req, res, next) {
-    axios.post(process.env.USERSERV_URL + '/channel/create')
+    axios.post(process.env.USERSERV_URL + '/channel/create', req.body)
     .then(channel=>{
         res.json(channel.data)
     })
@@ -82,13 +86,17 @@ function getChannelByUserId(req, res, next) {
 }
 
 function updateChannel(req, res, next) {
-    userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+    axios.put(process.env.USERSERV_URL + '/channel/' + req.params.id, req.body)
+    .then(channel=>{
+        res.json(channel.data)
+    })
+    .catch(err => next(err))
 }
 
 function removeChannel(req, res, next) {
-    userService.remove(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+    axios.delete(process.env.USERSERV_URL + '/channel/' + req.params.id)
+    .then(channel=>{
+        res.json(channel.data)
+    })
+    .catch(err => next(err))
 }

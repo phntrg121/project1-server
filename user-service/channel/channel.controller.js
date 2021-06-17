@@ -24,12 +24,12 @@ function getByUserId(req, res, next) {
 
 function update(req, res, next) {
     channelService.update(req.params.id, req.body)
-    .then(() => res.json({}))
+    .then(channel => res.json(channel))
     .catch(err => next(err));
 }
 
 function remove(req, res, next) {
     channelService.remove(req.params.id)
-    .then(() => res.json({}))
+    .then(channel => res.json(channel))
     .catch(err => next(err));
 }

@@ -74,24 +74,38 @@ async function create(userParam) {
     }
 }
 
-async function update(id, userParam) {
+async function update(id, params) {
     const user = await User.findById(id);
 
     // validate
-    if (!user) throw 'User not found';
-    if (user.email !== userParam.email && await User.findOne({ email: userParam.email })) {
-        throw 'Username "' + userParam.username + '" is already taken';
+    if (!user) return {
+        message: 'User not found',
+        data: null
     }
 
-    // hash password if it was entered
-    if (userParam.password) {
-        userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    const updateUser = await User.findOneAndUpdate({ _id:  id}, params, { new: true })
+
+    return {
+        message: 'OK',
+        data: updateUser
     }
+
+
+
+    // if (user.email !== userParam.email && await User.findOne({ email: userParam.email })) {
+    //     throw 'Username "' + userParam.username + '" is already taken';
+    // }
+
+    // // hash password if it was entered
+    // if (userParam.password) {
+    //     userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    // }
 
     // copy userParam properties to user
-    Object.assign(user, userParam);
 
-    await user.save();
+    // Object.assign(user, userParam);
+
+    // await user.save();
 }
 
 async function remove(id) {
