@@ -15,7 +15,7 @@ async function create(param) {
 
     await sub.save();
 
-    const newSub = await Subscription.findOne({ userId: id });
+    const newSub = await Subscription.findById(sub._id);
     return {
         message: 'OK',
         data: newSub

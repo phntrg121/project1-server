@@ -22,7 +22,7 @@ async function getByUserId(id) {
 }
 
 async function create(param) {
-    if (await Channel.findOne({userId: param.id})) {
+    if (await Channel.findOne({userId: param.UserId})) {
         return {
             message: 'Channel is already used',
             data: null
@@ -40,13 +40,22 @@ async function create(param) {
     }
 }
 
-async function update(id, param) {
+async function update(id, params) {
     const channel = await Channel.findById(id);
 
-    Object.assign(channel, param);
+    // validate
+    if (!channel) return {
+        message: 'Channel not found',
+        data: null
+    }
 
-    await channel.save();
-}
+    const updateChannel = await Channel.findOneAndUpdate({ _id:  id}, params, { new: true })
+
+    return {
+        message: 'OK',
+        data: updateChannel
+    }
+}  
 
 async function remove(id) {
     await User.findByIdAndRemove(id);

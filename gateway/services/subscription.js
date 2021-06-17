@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/subscription/create/:id', create);
+router.post('/subscription/create', create);
 router.get('/subscription/subscribers/:id', getSubscriber);
 router.get('/subscription/subscriptions/:id', getSubscription);
 router.post('/subscription/subscribe', subscribe);

@@ -1,39 +1,46 @@
-const express = require('express');
-const router = express.Router();
-const videoService = require('./video.service');
+const express = require('express')
+const router = express.Router()
+const videoService = require('./video.service')
 
 // routes
-router.post('/related', getRelatedVideo);
-router.get('', getFirstPage);
-router.get('/page=:page', getPage);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.delete('/:id', remove);
+router.post('/related', getRelatedVideos)
+router.get('', getVideos)
+router.get('/page=:page', getMore)
+router.get('/:id', getById)
+router.post('/search', search)
+router.put('/:id', update)
+router.delete('/:id', remove)
 
-module.exports = router;
+module.exports = router
 
-function getRelatedVideo(req, res, next){
-    videoService.getRelatedVideo(req.body)
-    .then(video => res.json(video))
+function getRelatedVideos(req, res, next){
+    videoService.getRelatedVideos(req.body)
+    .then(videos => res.json(videos))
     .catch(err => next(err))
 }
 
-function getFirstPage(req, res, next) {
-    videoService.getFirstPage()
+function getVideos(req, res, next) {
+    videoService.getVideos()
     .then(videos => res.json(videos))
-    .catch(err => next(err));
+    .catch(err => next(err))
 }
 
-function getPage(req, res, next) {
-    videoService.getPage(req.params.page)
+function getMore(req, res, next) {
+    videoService.getMore(req.params.page)
     .then(videos => res.json(videos))
-    .catch(err => next(err));
+    .catch(err => next(err))
 }
 
 function getById(req, res, next) {
     videoService.getById(req.params.id)
     .then(video => res.json(video))
-    .catch(err => next(err));
+    .catch(err => next(err))
+}
+
+function search(req, res, next){
+    videoService.search(req.body)
+    .then(videos => res.json(videos))
+    .catch(err => next(err))
 }
 
 function update(req, res, next) {
