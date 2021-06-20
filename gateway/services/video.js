@@ -3,16 +3,17 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/upload', upload);
-router.get('/upload/channel=:id', getUpload);
-router.post('/video/related', getRelatedVideo);
-router.get('/video', getFirstPage);
-router.get('/video/page=:page', getPage);
-router.get('/video/:id', getById);
-router.put('/video/:id', update);
-router.delete('/video/:id', remove);
+router.post('/upload', upload)
+router.get('/upload/channel=:id', getUpload)
+router.post('/video/related', getRelatedVideo)
+router.get('/video', getVideos)
+router.get('/video/page=:page', getMore)
+router.get('/video/:id', getById)
+router.post('/video/search', search)
+router.put('/video/:id', update)
+router.delete('/video/:id', remove)
 
-module.exports = router;
+module.exports = router
 
 function upload(req, res, next){
     axios.post(process.env.VIDEOSERV_URL + '/upload', req.body)
@@ -38,7 +39,7 @@ function getRelatedVideo(req, res, next){
     .catch(err => next(err))
 }
 
-function getFirstPage(req, res, next) {
+function getVideos(req, res, next) {
     axios.get(process.env.VIDEOSERV_URL + '/video')
     .then(video=>{
         res.json(video.data)
@@ -46,7 +47,7 @@ function getFirstPage(req, res, next) {
     .catch(err => next(err))
 }
 
-function getPage(req, res, next) {
+function getMore(req, res, next) {
     axios.get(process.env.VIDEOSERV_URL + '/video/page=' + req.params.page)
     .then(video=>{
         res.json(video.data)
@@ -62,14 +63,22 @@ function getById(req, res, next) {
     .catch(err => next(err))
 }
 
+function search(req, res, next){
+    axios.post(process.env.VIDEOSERV_URL + '/video/search', req.body)
+    .then(video=>{
+        res.json(video.data)
+    })
+    .catch(err => next(err))    
+}
+
 function update(req, res, next) {
     videoService.update(req.params.id, req.body)
     .then(video => res.json(video))
-    .catch(err => next(err));
+    .catch(err => next(err))
 }
 
 function remove(req, res, next) {
     videoService.remove(req.params.id)
     .then(video => res.json(video))
-    .catch(err => next(err));
+    .catch(err => next(err))
 }

@@ -6,7 +6,7 @@ const schema = new Schema({
     thumbnail: { type: String, required: true },
     uploadedDate: { type: Date, default: Date.now },
     videoURL: { type: String, required: true },
-    description: { type: String, default: "No description"},
+    description: { type: String, default: ""},
     uploaderId: { type: String, required: true },
     views: { type: Number, default: 0},
     likes: { type: Number, default: 0},
@@ -20,5 +20,8 @@ schema.set('toJSON', {
         delete ret._id;
     }
 });
+
+
+schema.index({ title: "text", description: "text", tags: "text"}); 
 
 module.exports = mongoose.model('Video', schema);

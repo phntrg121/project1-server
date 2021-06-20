@@ -3,7 +3,7 @@ const router = express.Router();
 const subService = require('./subscription.service');
 
 // routes
-router.post('/create/:id', create);
+router.post('/create', create);
 router.get('/subscribers/:id', getSubscriber);
 router.get('/subscriptions/:id', getSubscription);
 router.post('/subscribe', subscribe);
@@ -12,7 +12,7 @@ router.post('/check', check);
 module.exports = router;
 
 function create(req, res, next) {
-    subService.create(req.params.id)
+    subService.create(req.body)
     .then(sub => res.json(sub))
     .catch(err => next(err))
 }
