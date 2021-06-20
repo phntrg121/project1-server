@@ -31,7 +31,9 @@ spec:
         - name: COMMENTSERV_URL
           value: "http://prj1-commentserv-service.default.svc.cluster.local:8090/api/v1"
         - name: SUBSCRIPTIONSERV_URL
-          value: "http://prj1-subscriptionserv-service.default.svc.cluster.local:8091/api/v1"           
+          value: "http://prj1-subscriptionserv-service.default.svc.cluster.local:8091/api/v1" 
+        - name: PLAYLISTSERV_URL
+          value: "http://prj1-playlistserv-service.default.svc.cluster.local:8092/api/v1"           
 ---
 apiVersion: v1
 kind: Service

@@ -17,7 +17,7 @@ router.delete('/watchlater/:id', removeWL);
 module.exports = router;
 
 function createPlaylist(req, res, next) {
-    axios.post(process.env.PLAYLIST_URL + '/playlist/create', req.body)
+    axios.post(process.env.PLAYLISTSERV_URL + '/playlist/create', req.body)
     .then(list=>{
         res.json(list.data)
     })
@@ -25,7 +25,7 @@ function createPlaylist(req, res, next) {
 }
 
 function getPlaylistById(req, res, next) {
-    axios.get(process.env.PLAYLIST_URL + '/playlist/' + req.params.id)
+    axios.get(process.env.PLAYLISTSERV_URL + '/playlist/' + req.params.id)
     .then(list=>{
         res.json(list.data)
     })
@@ -33,7 +33,7 @@ function getPlaylistById(req, res, next) {
 }
 
 function getAllPlaylistFrom(req, res, next) {
-    axios.get(process.env.PLAYLIST_URL + '/playlist/user/' + req.params.id)
+    axios.get(process.env.PLAYLISTSERV_URL + '/playlist/user/' + req.params.id)
     .then(list=>{
         res.json(list.data)
     })
@@ -56,7 +56,7 @@ function removePlaylist(req, res, next) {
 
 
 function createWL(req, res, next) {
-    axios.post(process.env.PLAYLIST_URL + '/watchlater/create', req.body)
+    axios.post(process.env.PLAYLISTSERV_URL + '/watchlater/create', req.body)
     .then(list=>{
         res.json(list.data)
     })
@@ -64,7 +64,7 @@ function createWL(req, res, next) {
 }
 
 function getWLByUserId(req, res, next) {
-    axios.get(process.env.PLAYLIST_URL + '/watchlater/' + req.params.id)
+    axios.get(process.env.PLAYLISTSERV_URL + '/watchlater/' + req.params.id)
     .then(list=>{
         res.json(list.data)
     })
