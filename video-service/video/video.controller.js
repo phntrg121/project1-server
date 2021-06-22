@@ -9,6 +9,10 @@ router.get('/page=:page', getMore)
 router.get('/:id', getById)
 router.post('/search', search)
 router.put('/:id', update)
+router.put('/view/:id', putView)
+router.put('/like/:id', putLike)
+router.put('/comment/:id', putComment)
+router.put('/visibility/:id', setVisibility)
 router.delete('/:id', remove)
 
 module.exports = router
@@ -45,6 +49,30 @@ function search(req, res, next){
 
 function update(req, res, next) {
     videoService.update(req.params.id, req.body)
+    .then(video => res.json(video))
+    .catch(err => next(err));
+}
+
+function putView(req, res, next) {
+    videoService.putView(req.params.id, req.body)
+    .then(video => res.json(video))
+    .catch(err => next(err));
+}
+
+function putLike(req, res, next) {
+    videoService.putLike(req.params.id, req.body)
+    .then(video => res.json(video))
+    .catch(err => next(err));
+}
+
+function putComment(req, res, next) {
+    videoService.putComment(req.params.id, req.body)
+    .then(video => res.json(video))
+    .catch(err => next(err));
+}
+
+function setVisibility(req, res, next) {
+    videoService.setVisibility(req.params.id, req.body)
     .then(video => res.json(video))
     .catch(err => next(err));
 }

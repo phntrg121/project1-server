@@ -1,21 +1,21 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const axios = require('axios')
 
 // routes
-router.post('/comment/post', postComment);
-router.get('/comment/video=:id', getVideoComments);
-router.get('/comment/:id', getCommentById);
-router.put('/comment/:id', updateComment);
-router.delete('/comment/:id', removeComment);
+router.post('/comment/post', postComment)
+router.get('/comment/video=:id', getVideoComments)
+router.get('/comment/:id', getCommentById)
+router.put('/comment/:id', updateComment)
+router.delete('/comment/:id', removeComment)
 
-router.post('/reply/post', postReply);
-router.get('/reply/comment=:id', getCommentReplies);
-router.get('/reply/:id', getReplyById);
-router.put('/reply/:id', updateReply);
-router.delete('/reply/:id', removeReply);
+router.post('/reply/post', postReply)
+router.get('/reply/comment=:id', getCommentReplies)
+router.get('/reply/:id', getReplyById)
+router.put('/reply/:id', updateReply)
+router.delete('/reply/:id', removeReply)
 
-module.exports = router;
+module.exports = router
 
 //Comment
 

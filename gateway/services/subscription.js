@@ -1,15 +1,15 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const axios = require('axios')
 
 // routes
-router.post('/subscription/create', create);
-router.get('/subscription/subscribers/:id', getSubscriber);
-router.get('/subscription/subscriptions/:id', getSubscription);
-router.post('/subscription/subscribe', subscribe);
-router.post('/subscription/check', check);
+router.post('/subscription/create', create)
+router.get('/subscription/subscribers/:id', getSubscriber)
+router.get('/subscription/subscriptions/:id', getSubscription)
+router.post('/subscription/subscribe', subscribe)
+router.post('/subscription/check', check)
 
-module.exports = router;
+module.exports = router
 
 function create(req, res, next) {
     axios.post(process.env.SUBSCRIPTIONSERV_URL + '/subscription/create', req.body)

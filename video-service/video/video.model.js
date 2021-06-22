@@ -10,7 +10,9 @@ const schema = new Schema({
     uploaderId: { type: String, required: true },
     views: { type: Number, default: 0},
     likes: { type: Number, default: 0},
-    tags: { type: [String], default: []}
+    comments: { type: Number, default: 0},
+    visibility: { type: String, default: "public"},
+    tags: { type: [String], default: []},
 });
 
 schema.set('toJSON', {
