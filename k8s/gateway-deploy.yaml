@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prj1-gateway-deployment
+  name: gateway-deployment
   labels:
-    app: prj1-gateway
+    app: gateway
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: prj1-gateway
+      app: gateway
   template:
     metadata:
       labels:
-        app: prj1-gateway
+        app: gateway
     spec:        
       containers:
-      - name: prj1-gateway
-        image: prj1-gateway:latest
+      - name: gateway
+        image: gateway:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8081
@@ -25,26 +25,30 @@ spec:
         - name: PORT
           value: "8081"
         - name: USERSERV_URL
-          value: "http://prj1-userserv-service.default.svc.cluster.local:8088/api/v1"
+          value: "http://userserv-service.default.svc.cluster.local:8088/api/v1"
         - name: VIDEOSERV_URL
-          value: "http://prj1-videoserv-service.default.svc.cluster.local:8089/api/v1"
+          value: "http://videoserv-service.default.svc.cluster.local:8089/api/v1"
         - name: COMMENTSERV_URL
-          value: "http://prj1-commentserv-service.default.svc.cluster.local:8090/api/v1"
+          value: "http://commentserv-service.default.svc.cluster.local:8090/api/v1"
         - name: SUBSCRIPTIONSERV_URL
-          value: "http://prj1-subscriptionserv-service.default.svc.cluster.local:8091/api/v1" 
+          value: "http://subscriptionserv-service.default.svc.cluster.local:8091/api/v1" 
         - name: PLAYLISTSERV_URL
-          value: "http://prj1-playlistserv-service.default.svc.cluster.local:8092/api/v1"           
+          value: "http://playlistserv-service.default.svc.cluster.local:8092/api/v1"           
+        - name: LIKESERV_URL
+          value: "http://likeserv-service.default.svc.cluster.local:8093/api/v1"           
+        - name: HISTORYSERV_URL
+          value: "http://historyserv-service.default.svc.cluster.local:8094/api/v1"           
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prj1-gateway-service
+  name: gateway-service
 spec:
   selector:
-    app: prj1-gateway
+    app: gateway
   type: LoadBalancer
   ports:
-    - name: prj1-gateway-service
+    - name: gateway-service
       port: 8081
       targetPort: 8081  
       protocol: TCP
