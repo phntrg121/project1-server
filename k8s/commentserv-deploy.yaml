@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prj1-commentserv-deployment
+  name: commentserv-deployment
   labels:
-    app: prj1-commentserv
+    app: commentserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: prj1-commentserv
+      app: commentserv
   template:
     metadata:
       labels:
-        app: prj1-commentserv
+        app: commentserv
     spec:        
       containers:
-      - name: prj1-commentserv
-        image: prj1-commentserv:latest
+      - name: commentserv
+        image: commentserv:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8090
@@ -27,18 +27,18 @@ spec:
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
-              name: prj1-database-secret
+              name: database-secret
               key: commentserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prj1-commentserv-service
+  name: commentserv-service
 spec:
   selector:
-    app: prj1-commentserv
+    app: commentserv
   ports:
-    - name: prj1-commentserv-service
+    - name: commentserv-service
       port: 8090
       targetPort: 8090
       protocol: TCP

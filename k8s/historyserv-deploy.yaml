@@ -1,44 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: subscriptionserv-deployment
+  name: historyserv-deployment
   labels:
-    app: subscriptionserv
+    app: historyserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: subscriptionserv
+      app: historyserv
   template:
     metadata:
       labels:
-        app: subscriptionserv
+        app: historyserv
     spec:        
       containers:
-      - name: subscriptionserv
-        image: subscriptionserv:latest
+      - name: historyserv
+        image: historyserv:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 8091
+        - containerPort: 8094
         env:
         - name: PORT
-          value: "8091"
+          value: "8094"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: subscriptionserv-mongodb-url             
+              key: historyserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: subscriptionserv-service
+  name: historyserv-service
 spec:
   selector:
-    app: subscriptionserv
+    app: historyserv
   ports:
-    - name: subscriptionserv-service
-      port: 8091
-      targetPort: 8091
+    - name: historyserv-service
+      port: 8094
+      targetPort: 8094
       protocol: TCP

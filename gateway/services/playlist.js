@@ -3,16 +3,16 @@ const router = express.Router();
 const axios = require('axios')
 
 // routes
-router.post('/playlist/create', createPlaylist);
-router.get('/playlist/:id', getPlaylistById);
-router.get('/playlist/user/:id', getAllPlaylistFrom);
+router.post('/playlist/create', createPlaylist)
+router.get('/playlist/:id', getPlaylistById)
+router.get('/playlist/user/:id', getAllPlaylistFrom)
 router.put('/playlist/:id', updatePlaylist);
-router.delete('/playlist/:id', removePlaylist);
+router.delete('/playlist/:id', removePlaylist)
 
-router.post('/watchlater/create', createWL);
-router.get('/watchlater/:id', getWLByUserId);
-router.put('/watchlater/:id', updateWL);
-router.delete('/watchlater/:id', removeWL);
+router.post('/watchlater/create', createWL)
+router.get('/watchlater/:id', getWLByUserId)
+router.put('/watchlater/:id', updateWL)
+router.delete('/watchlater/:id', removeWL)
 
 module.exports = router;
 
