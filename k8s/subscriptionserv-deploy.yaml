@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: subscriptionserv-deployment
+  namespace: project1
   labels:
     app: subscriptionserv
 spec:
@@ -14,7 +15,7 @@ spec:
     metadata:
       labels:
         app: subscriptionserv
-    spec:        
+    spec:
       containers:
       - name: subscriptionserv
         image: subscriptionserv:latest
@@ -34,6 +35,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: subscriptionserv-service
+  namespace: project1
 spec:
   selector:
     app: subscriptionserv

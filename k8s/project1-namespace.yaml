@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-   name: project01
+   name: project1

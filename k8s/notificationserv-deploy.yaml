@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: videoserv-deployment
+  name: notificationserv-deployment
   namespace: project1
   labels:
-    app: videoserv
+    app: notificationserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: videoserv
+      app: notificationserv
   template:
     metadata:
       labels:
-        app: videoserv
+        app: notificationserv
     spec:
       containers:
-      - name: videoserv
-        image: videoserv:latest
+      - name: notificationserv
+        image: notificationserv:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 8089
+        - containerPort: 8095
         env:
         - name: PORT
-          value: "8089"
+          value: "8095"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: videoserv-mongodb-url
+              key: notificationserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: videoserv-service
+  name: notificationserv-service
   namespace: project1
 spec:
   selector:
-    app: videoserv
+    app: notificationserv
   ports:
-    - name: videoserv-service
-      port: 8089
-      targetPort: 8089
+    - name: notificationserv-service
+      port: 8095
+      targetPort: 8095
       protocol: TCP
