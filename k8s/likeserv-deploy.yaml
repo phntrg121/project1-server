@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: videoserv-deployment
+  name: likeserv-deployment
   namespace: project1
   labels:
-    app: videoserv
+    app: likeserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: videoserv
+      app: likeserv
   template:
     metadata:
       labels:
-        app: videoserv
+        app: likeserv
     spec:
       containers:
-      - name: videoserv
-        image: videoserv:latest
+      - name: likeserv
+        image: likeserv:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 8089
+        - containerPort: 8093
         env:
         - name: PORT
-          value: "8089"
+          value: "8093"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: videoserv-mongodb-url
+              key: likeserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: videoserv-service
+  name: likeserv-service
   namespace: project1
 spec:
   selector:
-    app: videoserv
+    app: likeserv
   ports:
-    - name: videoserv-service
-      port: 8089
-      targetPort: 8089
+    - name: likeserv-service
+      port: 8093
+      targetPort: 8093
       protocol: TCP

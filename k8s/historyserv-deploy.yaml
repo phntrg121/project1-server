@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: videoserv-deployment
+  name: historyserv-deployment
   namespace: project1
   labels:
-    app: videoserv
+    app: historyserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: videoserv
+      app: historyserv
   template:
     metadata:
       labels:
-        app: videoserv
+        app: historyserv
     spec:
       containers:
-      - name: videoserv
-        image: videoserv:latest
+      - name: historyserv
+        image: historyserv:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 8089
+        - containerPort: 8094
         env:
         - name: PORT
-          value: "8089"
+          value: "8094"
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
               name: database-secret
-              key: videoserv-mongodb-url
+              key: historyserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: videoserv-service
+  name: historyserv-service
   namespace: project1
 spec:
   selector:
-    app: videoserv
+    app: historyserv
   ports:
-    - name: videoserv-service
-      port: 8089
-      targetPort: 8089
+    - name: historyserv-service
+      port: 8094
+      targetPort: 8094
       protocol: TCP

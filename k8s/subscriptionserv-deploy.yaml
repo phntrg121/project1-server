@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prj1-subscriptionserv-deployment
+  name: subscriptionserv-deployment
+  namespace: project1
   labels:
-    app: prj1-subscriptionserv
+    app: subscriptionserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: prj1-subscriptionserv
+      app: subscriptionserv
   template:
     metadata:
       labels:
-        app: prj1-subscriptionserv
-    spec:        
+        app: subscriptionserv
+    spec:
       containers:
-      - name: prj1-subscriptionserv
-        image: prj1-subscriptionserv:latest
+      - name: subscriptionserv
+        image: subscriptionserv:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8091
@@ -27,18 +28,19 @@ spec:
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
-              name: prj1-database-secret
+              name: database-secret
               key: subscriptionserv-mongodb-url             
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prj1-subscriptionserv-service
+  name: subscriptionserv-service
+  namespace: project1
 spec:
   selector:
-    app: prj1-subscriptionserv
+    app: subscriptionserv
   ports:
-    - name: prj1-subscriptionserv-service
+    - name: subscriptionserv-service
       port: 8091
       targetPort: 8091
       protocol: TCP

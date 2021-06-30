@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prj1-playlistserv-deployment
+  name: playlistserv-deployment
+  namespace: project1
   labels:
-    app: prj1-playlistserv
+    app: playlistserv
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: prj1-playlistserv
+      app: playlistserv
   template:
     metadata:
       labels:
-        app: prj1-playlistserv
-    spec:        
+        app: playlistserv
+    spec:
       containers:
-      - name: prj1-playlistserv
-        image: prj1-playlistserv:latest
+      - name: playlistserv
+        image: playlistserv:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8092
@@ -27,18 +28,19 @@ spec:
         - name: MONGODB_URL
           valueFrom:
             secretKeyRef:
-              name: prj1-database-secret
+              name: database-secret
               key: playlistserv-mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prj1-playlistserv-service
+  name: playlistserv-service
+  namespace: project1
 spec:
   selector:
-    app: prj1-playlistserv
+    app: playlistserv
   ports:
-    - name: prj1-playlistserv-service
+    - name: playlistserv-service
       port: 8092
       targetPort: 8092
       protocol: TCP

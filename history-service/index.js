@@ -8,13 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/users', require('./services/user.js'));
-app.use('/videos', require('./services/video.js'));
-app.use('/comments', require('./services/comment'));
-app.use('/subscriptions', require('./services/subscription'));
-app.use('/playlists', require('./services/playlist'));
-app.use('/likes', require('./services/like'));
-app.use('/histories', require('./services/history'));
+app.use('/api/v1/watch', require('./watch/watch.controller'));
 
 const port = process.env.PORT || 3000;
 

@@ -5,6 +5,7 @@ const Video = db.Video;
 module.exports = {
     upload,
     getUploads,
+    getAllUploads,
 };
 
 async function upload(videoParam) {
@@ -61,7 +62,29 @@ async function getUploads(id) {
     else{
         let videos = []
         for(let i in upload.videos){
-            const video = await Video.findOne({_id: upload.videos[i] })
+            const video = await Video.findOne({_id: upload.videos[i], visibility: "public"})
+            if(video) videos.push(video)
+        }
+        return {
+            message: "OK",
+            data: videos
+        }
+    }
+    
+}
+
+async function getAllUploads(id) {
+    const upload = await Upload.findOne({ userId: id })
+    if(!upload){
+        return {
+            message: "OK",
+            data: upload
+        }
+    }
+    else{
+        let videos = []
+        for(let i in upload.videos){
+            const video = await Video.findOne({_id: upload.videos[i]})
             if(video) videos.push(video)
         }
         return {

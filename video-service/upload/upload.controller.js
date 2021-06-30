@@ -5,7 +5,8 @@ const uploadService = require('./upload.service');
 // routes
 
 router.post('', upload);
-router.get('/channel=:id', getUploads);
+router.get('/public/channel=:id', getUploads);
+router.get('/channel=:id', getAllUploads);
 
 module.exports = router;
 
@@ -18,6 +19,12 @@ function upload(req, res, next){
 
 function getUploads(req, res, next) {
     uploadService.getUploads(req.params.id)
+    .then(video => res.json(video))
+    .catch(err => next(err));
+}
+
+function getAllUploads(req, res, next) {
+    uploadService.getAllUploads(req.params.id)
     .then(video => res.json(video))
     .catch(err => next(err));
 }

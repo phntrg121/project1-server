@@ -1,21 +1,21 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const axios = require('axios')
 
 // routes
-router.post('/user/signin', signIn);
-router.post('/user/signup', signUp);
-router.get('/user/', getAllUser);
-router.get('/user/:id', getUserById);
-router.put('/user/:id', updateUser);
-router.delete('/user/:id', removeUser);
+router.post('/user/signin', signIn)
+router.post('/user/signup', signUp)
+router.get('/user/', getAllUser)
+router.get('/user/:id', getUserById)
+router.put('/user/:id', updateUser)
+router.delete('/user/:id', removeUser)
 
-router.post('/channel/create', createChannel);
-router.get('/channel/:id', getChannelByUserId);
-router.put('/channel/:id', updateChannel);
-router.delete('/channel/:id', removeChannel);
+router.post('/channel/create', createChannel)
+router.get('/channel/:id', getChannelByUserId)
+router.put('/channel/:id', updateChannel)
+router.delete('/channel/:id', removeChannel)
 
-module.exports = router;
+module.exports = router
 
 function signIn(req, res, next) {
     axios.post(process.env.USERSERV_URL + '/user/signin', req.body)
